@@ -1,0 +1,102 @@
+/**
+ * PriceSidebar – sticky/floating price breakdown.
+ * Shows base price + each selected addon + VAT + total.
+ */
+
+import { formatPrice } from '../utils/price';
+
+export default function PriceSidebar({
+  config,
+  totals,
+  selections,
+  groups,
+  showVat,
+  isMobile = false,
+}) {
+  if (!config) return null;
+
+  const containerClass = isMobile ? 'gvc-sidebar gvc-sidebar--mobile' : 'gvc-sidebar';
+
+  return (
+    <div className={containerClass}>
+      <div className="gvc-sidebar__inner">
+        <h3 className="gvc-sidebar__title">Prijsoverzicht</h3>
+
+        {/* Base price */}
+        <div className="gvc-sidebar__row gvc-sidebar__row--base">
+          <span className="gvc-sidebar__label">{config.product_name}</span>
+          <span className="gvc-sidebar__value">{formatPrice(totals.base)}</span>
+        </div>
+
+        {/* Selected addons */}
+        <div className="gvc-sidebar__addons">
+          {totals.breakdown.map((line, idx) => {
+            const group = groups.find((g) => g.id == line.groupId);
+            return (
+              <div key={idx} className="gvc-sidebar__row gvc-sidebar__row--addon">
+                <span className="gvc-sidebar__label">
+                  <span className="gvc-sidebar__group-label">{group?.title || ''}</span>
+                  {line.title}
+                  {line.quantity > 1 && (
+                    <span className="gvc-sidebar__qty"> ×{line.quantity}</span>
+                  )}
+                </span>
+                <span className="gvc-sidebar__value">
+                  {line.total > 0 ? `+ ${formatPrice(line.total)}` : 'Inclusief'}
+                </span>
+              </div>
+            );
+          })}
+
+          {totals.breakdown.length === 0 && (
+            <p className="gvc-sidebar__empty">Nog geen opties geselecteerd</p>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div className="gvc-sidebar__divider" />
+
+        {/* Subtotal */}
+        {showVat && totals.taxRate > 0 && (
+          <>
+            <div className="gvc-sidebar__row gvc-sidebar__row--subtotal">
+              <span className="gvc-sidebar__label">Subtotaal</span>
+              <span className="gvc-sidebar__value">
+                {formatPrice(config.prices_include_tax ? totals.subtotal - totals.tax : totals.subtotal)}
+              </span>
+            </div>
+
+            <div className="gvc-sidebar__row gvc-sidebar__row--tax">
+              <span className="gvc-sidebar__label">
+                BTW ({totals.taxRate}%)
+              </span>
+              <span className="gvc-sidebar__value">{formatPrice(totals.tax)}</span>
+            </div>
+
+            <div className="gvc-sidebar__divider" />
+          </>
+        )}
+
+        {/* Total */}
+        <div className="gvc-sidebar__row gvc-sidebar__row--total">
+          <span className="gvc-sidebar__label">Totaal</span>
+          <span className="gvc-sidebar__value">{formatPrice(totals.total)}</span>
+        </div>
+
+        {showVat && totals.taxRate > 0 && (
+          <p className="gvc-sidebar__vat-note">
+            {config.prices_include_tax ? 'Inclusief' : 'Exclusief'} BTW
+          </p>
+        )}
+
+        {/* Unselected required groups warning */}
+        {groups.some((g) => g.is_required == 1 && Object.keys(selections[g.id] || {}).length === 0) && (
+          <div className="gvc-sidebar__warning">
+            <span>⚠</span>
+            <span>Vereiste opties nog niet geselecteerd</span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,26 @@
+{
+  "name": "gartenvista-configurator",
+  "version": "1.2.5",
+  "description": "High-performance WooCommerce product configurator for GartenVista",
+  "private": true,
+  "files": [
+    "gartenvista-configurator.php",
+    "README.md",
+    "uninstall.php",
+    "admin",
+    "includes",
+    "frontend/dist",
+    "frontend/css",
+    "frontend/index.php"
+  ],
+  "scripts": {
+    "build": "wp-scripts build --config webpack.config.js",
+    "start": "wp-scripts start --config webpack.config.js",
+    "lint": "wp-scripts lint-js frontend/src/",
+    "zip": "wp-scripts plugin-zip"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  },
+  "dependencies": {}
+}
