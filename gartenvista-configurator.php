@@ -39,6 +39,8 @@ spl_autoload_register(function ($class) {
 });
 
 /* ── Activation / Deactivation ─────────────────────────────── */
+require_once GVC_PLUGIN_DIR . 'includes/class-cache.php';
+require_once GVC_PLUGIN_DIR . 'includes/class-activator.php';
 register_activation_hook(__FILE__, ['GVC\\Activator', 'activate']);
 register_deactivation_hook(__FILE__, ['GVC\\Activator', 'deactivate']);
 

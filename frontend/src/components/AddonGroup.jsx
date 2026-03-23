@@ -1,6 +1,7 @@
 /**
  * AddonGroup – renders items for a configuration step.
  * Supports display_type: radio, checkbox, cards, dropdown.
+ * Items with item_type 'select_dropdown' render as individually labeled dropdowns.
  */
 
 import { useState, useCallback } from '@wordpress/element';
@@ -11,6 +12,7 @@ export default function AddonGroup({
   selection,
   onSelect,
   onClear,
+  onDeselectItem,
   onQuantityChange,
   onInfo,
   lazyLoad,
@@ -19,12 +21,16 @@ export default function AddonGroup({
   const items = group.items || [];
   const displayType = group.display_type || 'radio';
 
-  // Filter items
+  // Separate select_dropdown items from regular items
+  const selectDropdownItems = items.filter((item) => item.item_type === 'select_dropdown');
+  const nonDropdownItems = items.filter((item) => item.item_type !== 'select_dropdown');
+
+  // Filter non-dropdown items
   const filtered = searchTerm
-    ? items.filter((item) =>
+    ? nonDropdownItems.filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    : items;
+    : nonDropdownItems;
   const regularItems = filtered.filter((item) => item.item_type !== 'guarantee');
   const guaranteeItems = filtered.filter((item) => item.item_type === 'guarantee');
 
@@ -47,8 +53,74 @@ export default function AddonGroup({
         )}
       </div>
 
-      {/* Search filter for large item lists */}
-      {items.length > 8 && (
+      {/* Select Dropdown items – each rendered as its own labeled dropdown, 1 per row */}
+      {selectDropdownItems.length > 0 && (
+        <div className="gvc-select-dropdowns">
+          {selectDropdownItems.map((item) => {
+            const meta = item.meta_json || {};
+            const options = meta.dropdown_options || [];
+            const currentSel = selection[item.id];
+            const selectedIdx = currentSel?.selectedOptionIndex ?? '';
+            const selectedOption = selectedIdx !== '' ? options[selectedIdx] : null;
+
+            return (
+              <div key={item.id} className="gvc-select-dropdown-item">
+                <label className="gvc-select-dropdown-item__label">
+                  {item.title}
+                </label>
+                <div className="gvc-select-dropdown-item__control">
+                  {selectedOption?.image_url && (
+                    <img
+                      className="gvc-select-dropdown-item__image"
+                      src={selectedOption.image_url}
+                      alt={selectedOption.label}
+                    />
+                  )}
+                  <select
+                    className="gvc-dropdown"
+                    style={{ minHeight: '48px', height: 'auto', lineHeight: '1.4', padding: '10px 14px', fontSize: '14px', overflow: 'visible', whiteSpace: 'normal', boxSizing: 'border-box' }}
+                    value={selectedIdx}
+                    onChange={(e) => {
+                      const idx = e.target.value;
+                      if (idx === '') {
+                        if (onDeselectItem) onDeselectItem(item.id);
+                        return;
+                      }
+                      const opt = options[parseInt(idx, 10)];
+                      if (!opt) return;
+                      const optPrice = parseFloat(opt.price) || 0;
+                      onSelect(
+                        {
+                          ...item,
+                          price: optPrice,
+                          _optionLabel: opt.label,
+                          _optionImage: opt.image_url || '',
+                        },
+                        1,
+                        parseInt(idx, 10)
+                      );
+                    }}
+                  >
+                    <option value="">— Selecteer {item.title} —</option>
+                    {options.map((opt, idx) => {
+                      const optPrice = parseFloat(opt.price) || 0;
+                      return (
+                        <option key={idx} value={idx}>
+                          {opt.label}
+                          {optPrice > 0 ? ` — +€${optPrice.toFixed(2)}` : ''}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Search filter for large item lists (non-dropdown items only) */}
+      {nonDropdownItems.length > 8 && (
         <div className="gvc-group__search">
           <input
             type="text"
@@ -60,18 +132,23 @@ export default function AddonGroup({
         </div>
       )}
 
-      {/* Dropdown display */}
-      {displayType === 'dropdown' && (
+      {/* Dropdown display (for group-level dropdown, not select_dropdown items) */}
+      {displayType === 'dropdown' && nonDropdownItems.length > 0 && (
         <select
           className="gvc-dropdown"
-          value={Object.keys(selection)[0] || ''}
+          style={{ minHeight: '48px', height: 'auto', lineHeight: '1.4', padding: '10px 14px', fontSize: '14px', overflow: 'visible', whiteSpace: 'normal', boxSizing: 'border-box' }}
+          value={
+            Object.keys(selection).find(
+              (k) => !items.find((i) => i.id == k && i.item_type === 'select_dropdown')
+            ) || ''
+          }
           onChange={(e) => {
             const id = parseInt(e.target.value, 10);
             if (!id) {
               onClear();
               return;
             }
-            const item = items.find((i) => i.id == id);
+            const item = nonDropdownItems.find((i) => i.id == id);
             if (item) onSelect(item, 1);
           }}
         >
@@ -85,7 +162,7 @@ export default function AddonGroup({
       )}
 
       {/* Card / Radio / Checkbox grid */}
-      {displayType !== 'dropdown' && (
+      {displayType !== 'dropdown' && nonDropdownItems.length > 0 && (
         <>
           {regularItems.length > 0 && (
             <div className={`gvc-items gvc-items--${displayType}`}>
@@ -138,7 +215,7 @@ export default function AddonGroup({
         </>
       )}
 
-      {filtered.length === 0 && (
+      {items.length === 0 && (
         <p className="gvc-empty">Geen opties gevonden.</p>
       )}
     </div>

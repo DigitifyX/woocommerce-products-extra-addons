@@ -430,7 +430,7 @@
 
     // ── Select Dropdown option helpers ──
     var addDropdownOption = function () {
-      set('dropdown_options', form.dropdown_options.concat([{ label: '', image_url: '' }]));
+      set('dropdown_options', form.dropdown_options.concat([{ label: '', image_url: '', price: 0 }]));
     };
     var updateDropdownOption = function (idx, field, val) {
       var updated = form.dropdown_options.map(function (o, i) { if (i === idx) { var no = {}; for (var k in o) no[k] = o[k]; no[field] = val; return no; } return o; });
@@ -532,11 +532,12 @@
         // ─── Select Dropdown options section ───
         form.item_type === 'select_dropdown' && h('div', { style: { marginTop: 16, padding: 16, background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 6 } },
           h('h4', { style: { margin: '0 0 4px', fontSize: 14, fontWeight: 600, color: '#166534' } }, '📋 Dropdown Options'),
-          h('p', { style: { fontSize: 12, color: '#4ade80', margin: '0 0 12px', color: '#15803d' } }, 'Add selectable options for this dropdown. Each option can have a label and an image. No price is applied.'),
+          h('p', { style: { fontSize: 12, margin: '0 0 12px', color: '#15803d' } }, 'Add selectable options for this dropdown. Each option can have a label, image, and price.'),
           form.dropdown_options.map(function (opt, idx) {
             return h('div', { key: idx, style: { display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center', padding: 10, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 6 } },
               opt.image_url ? h('img', { src: opt.image_url, style: { width: 40, height: 40, objectFit: 'cover', borderRadius: 4, flexShrink: 0 } }) : h('div', { style: { width: 40, height: 40, background: '#f3f4f6', borderRadius: 4, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#9ca3af' } }, '📷'),
               h('input', { type: 'text', value: opt.label, placeholder: 'Option label (e.g. Opal Polycarbonat)', style: { flex: 1, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 13 }, onChange: function (e) { updateDropdownOption(idx, 'label', e.target.value); } }),
+              h('input', { type: 'number', step: '0.01', value: opt.price || 0, placeholder: 'Price (€)', style: { width: 90, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 13 }, onChange: function (e) { updateDropdownOption(idx, 'price', parseFloat(e.target.value) || 0); } }),
               h('button', { type: 'button', className: 'gvc-admin-btn gvc-admin-btn--secondary', style: { fontSize: 11, padding: '4px 8px' }, onClick: function () { openMediaForDropdown(idx); } }, '📷'),
               h('button', { type: 'button', style: { background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 4, padding: '4px 8px', cursor: 'pointer', color: '#dc2626', fontSize: 14, lineHeight: 1.2 }, onClick: function () { removeDropdownOption(idx); } }, '×')
             );

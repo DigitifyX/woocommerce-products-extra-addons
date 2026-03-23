@@ -22,6 +22,7 @@ export default function Configurator({ productId }) {
     setActiveStep,
     selectItem,
     clearSelection,
+    deselectItem,
     updateQuantity,
     totals,
     validation,
@@ -122,8 +123,9 @@ export default function Configurator({ productId }) {
                     <AddonGroup
                       group={group}
                       selection={groupSels}
-                      onSelect={(item, qty) => selectItem(group.id, item, qty)}
+                      onSelect={(item, qty, optIdx) => selectItem(group.id, item, qty, optIdx)}
                       onClear={() => clearSelection(group.id)}
+                      onDeselectItem={(itemId) => deselectItem(group.id, itemId)}
                       onQuantityChange={(itemId, qty) => updateQuantity(group.id, itemId, qty)}
                       onInfo={(item) => setModalItem({ item, group })}
                       lazyLoad={cfg.lazyLoad}

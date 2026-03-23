@@ -60,18 +60,34 @@ export default function useConfigurator(productId) {
   }, [productId]);
 
   // Select an item in a group
-  const selectItem = useCallback((groupId, item, quantity = 1) => {
+  // optionIndex is used for select_dropdown items to track which dropdown option was chosen
+  const selectItem = useCallback((groupId, item, quantity = 1, optionIndex) => {
     setSelections((prev) => {
       const g = config?.groups?.find(g => g.id == groupId);
       const displayType = g?.display_type || 'radio';
 
       const groupSels = { ...(prev[groupId] || {}) };
 
+      // Select Dropdown items: always set independently (multiple can coexist in a group)
+      if (item.item_type === 'select_dropdown') {
+        groupSels[item.id] = {
+          item_id: item.id,
+          quantity,
+          item,
+          selectedOptionIndex: optionIndex,
+        };
+        return { ...prev, [groupId]: groupSels };
+      }
+
       if (displayType === 'dropdown') {
-        // Single select behavior only for dropdown formats
+        // Single select behavior only for dropdown formats (exclude existing select_dropdown selections)
+        const keepDropdowns = {};
+        Object.entries(groupSels).forEach(([k, v]) => {
+          if (v.item?.item_type === 'select_dropdown') keepDropdowns[k] = v;
+        });
         return {
           ...prev,
-          [groupId]: { [item.id]: { item_id: item.id, quantity, item } },
+          [groupId]: { ...keepDropdowns, [item.id]: { item_id: item.id, quantity, item } },
         };
       } else {
         // Multi select behavior for everything else (cards, radio, checkbox)
@@ -96,6 +112,15 @@ export default function useConfigurator(productId) {
       ...prev,
       [groupId]: {},
     }));
+  }, []);
+
+  // Deselect a specific item from a group (used for select_dropdown deselection)
+  const deselectItem = useCallback((groupId, itemId) => {
+    setSelections((prev) => {
+      const groupSels = { ...(prev[groupId] || {}) };
+      delete groupSels[itemId];
+      return { ...prev, [groupId]: groupSels };
+    });
   }, []);
 
   // Update quantity for a specific selection
@@ -128,8 +153,15 @@ export default function useConfigurator(productId) {
         const qty = sel.quantity || 1;
         const lineTotal = price * qty;
         addonsTotal += lineTotal;
+
+        // For select_dropdown items, show "ItemTitle: OptionLabel"
+        let displayTitle = sel.item.title;
+        if (sel.item.item_type === 'select_dropdown' && sel.item._optionLabel) {
+          displayTitle = sel.item.title + ': ' + sel.item._optionLabel;
+        }
+
         breakdown.push({
-          title: sel.item.title,
+          title: displayTitle,
           price,
           quantity: qty,
           total: lineTotal,
@@ -163,10 +195,17 @@ export default function useConfigurator(productId) {
     const payload = [];
     Object.values(selections).forEach((groupSels) => {
       Object.values(groupSels).forEach((sel) => {
-        payload.push({
+        const entry = {
           item_id: sel.item_id,
           quantity: sel.quantity,
-        });
+        };
+        // Include selected option data for select_dropdown items
+        if (sel.selectedOptionIndex !== undefined && sel.selectedOptionIndex !== null) {
+          entry.selected_option = sel.selectedOptionIndex;
+          entry.selected_option_label = sel.item?._optionLabel || '';
+          entry.selected_option_price = parseFloat(sel.item?.price) || 0;
+        }
+        payload.push(entry);
       });
     });
 
@@ -197,6 +236,7 @@ export default function useConfigurator(productId) {
     setActiveStep,
     selectItem,
     clearSelection,
+    deselectItem,
     updateQuantity,
     totals,
     validation,

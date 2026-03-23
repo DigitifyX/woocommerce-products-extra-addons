@@ -227,6 +227,51 @@
   font-size: 14px;
   background: var(--gvc-card-bg);
   cursor: pointer;
+  min-height: 46px;
+  overflow: visible;
+  text-overflow: ellipsis;
+  appearance: auto;
+}
+
+/* Select Dropdown Items – each item rendered as a labeled dropdown, 1 per row */
+.gvc-select-dropdowns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.gvc-select-dropdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.gvc-select-dropdown-item__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gvc-text);
+}
+
+.gvc-select-dropdown-item__control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.gvc-select-dropdown-item__control .gvc-dropdown {
+  flex: 1;
+}
+
+.gvc-select-dropdown-item__image {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--gvc-border);
+  flex-shrink: 0;
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -573,6 +618,12 @@
   -webkit-text-fill-color: #ffffff !important;
   letter-spacing: 0 !important;
   text-indent: 0 !important;
+}
+
+/* Ensure SVG icons inside add buttons are visible (white) */
+.gvc-btn--add svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 .gvc-btn--added {
@@ -938,7 +989,7 @@
   width: 32px;
   height: 32px;
   border: none;
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
@@ -947,10 +998,12 @@
   justify-content: center;
   z-index: 1;
   transition: background var(--gvc-transition);
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
 }
 
 .gvc-modal__close:hover {
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .gvc-modal__content {

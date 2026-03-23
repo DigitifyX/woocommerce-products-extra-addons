@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(powershell -Command \"Remove-Item ''gartenvista-configurator.zip'' -Force -ErrorAction SilentlyContinue; Compress-Archive -Path ''admin'',''frontend'',''includes'',''gartenvista-configurator.php'',''uninstall.php'' -DestinationPath ''gartenvista-configurator.zip'' -Force\")",
+      "Bash(cd /e)",
+      "Bash(rm -f gartenvista-configurator/gartenvista-configurator.zip)",
+      "Bash(tar -acf gartenvista-configurator/gartenvista-configurator.zip -C /e gartenvista-configurator/admin gartenvista-configurator/frontend gartenvista-configurator/includes gartenvista-configurator/gartenvista-configurator.php gartenvista-configurator/uninstall.php)",
+      "Bash(python3 -c \"import zipfile; z=zipfile.ZipFile\\(''e:/gartenvista-configurator/gartenvista-configurator.zip'',''r''\\); [print\\(n\\) for n in sorted\\(z.namelist\\(\\)\\) if ''includes'' in n or n.endswith\\(''.php''\\)]\")",
+      "Bash(python3 -c \":*)",
+      "Bash(python -c \":*)"
+    ]
+  }
+}
