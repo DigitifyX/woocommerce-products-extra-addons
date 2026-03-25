@@ -620,10 +620,21 @@
   text-indent: 0 !important;
 }
 
-/* Ensure SVG icons inside add buttons are visible (white) */
+/* Ensure ALL icons/text inside add buttons are visible (white) — including mobile */
 .gvc-btn--add svg {
   color: #ffffff !important;
+  fill: #ffffff !important;
   stroke: #ffffff !important;
+}
+
+.gvc-btn--add *,
+.gvc-btn--add span,
+.gvc-btn--add i,
+.gvc-btn--add::before,
+.gvc-btn--add::after {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
 }
 
 .gvc-btn--added {
