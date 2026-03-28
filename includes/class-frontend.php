@@ -76,6 +76,7 @@ class Frontend {
             'accentColor'    => $settings['accent_color'] ?? '#40916C',
             'showVat'        => ! empty( $settings['show_vat_breakdown'] ),
             'lazyLoad'       => ! empty( $settings['lazy_load_images'] ),
+            'locale'         => get_locale(),
         ]);
     }
 

@@ -4,6 +4,7 @@
  */
 
 import { formatPrice } from '../utils/price';
+import { t } from '../utils/i18n';
 
 export default function PriceSidebar({
   config,
@@ -20,7 +21,7 @@ export default function PriceSidebar({
   return (
     <div className={containerClass}>
       <div className="gvc-sidebar__inner">
-        <h3 className="gvc-sidebar__title">Prijsoverzicht</h3>
+        <h3 className="gvc-sidebar__title">{t('price_overview')}</h3>
 
         {/* Base price */}
         <div className="gvc-sidebar__row gvc-sidebar__row--base">
@@ -42,14 +43,14 @@ export default function PriceSidebar({
                   )}
                 </span>
                 <span className="gvc-sidebar__value">
-                  {line.total > 0 ? `+ ${formatPrice(line.total)}` : 'Inclusief'}
+                  {line.total > 0 ? `+ ${formatPrice(line.total)}` : t('included')}
                 </span>
               </div>
             );
           })}
 
           {totals.breakdown.length === 0 && (
-            <p className="gvc-sidebar__empty">Nog geen opties geselecteerd</p>
+            <p className="gvc-sidebar__empty">{t('no_options_selected')}</p>
           )}
         </div>
 
@@ -60,7 +61,7 @@ export default function PriceSidebar({
         {showVat && totals.taxRate > 0 && (
           <>
             <div className="gvc-sidebar__row gvc-sidebar__row--subtotal">
-              <span className="gvc-sidebar__label">Subtotaal</span>
+              <span className="gvc-sidebar__label">{t('subtotal')}</span>
               <span className="gvc-sidebar__value">
                 {formatPrice(config.prices_include_tax ? totals.subtotal - totals.tax : totals.subtotal)}
               </span>
@@ -68,7 +69,7 @@ export default function PriceSidebar({
 
             <div className="gvc-sidebar__row gvc-sidebar__row--tax">
               <span className="gvc-sidebar__label">
-                BTW ({totals.taxRate}%)
+                {t('vat', { rate: totals.taxRate })}
               </span>
               <span className="gvc-sidebar__value">{formatPrice(totals.tax)}</span>
             </div>
@@ -79,13 +80,13 @@ export default function PriceSidebar({
 
         {/* Total */}
         <div className="gvc-sidebar__row gvc-sidebar__row--total">
-          <span className="gvc-sidebar__label">Totaal</span>
+          <span className="gvc-sidebar__label">{t('total')}</span>
           <span className="gvc-sidebar__value">{formatPrice(totals.total)}</span>
         </div>
 
         {showVat && totals.taxRate > 0 && (
           <p className="gvc-sidebar__vat-note">
-            {config.prices_include_tax ? 'Inclusief' : 'Exclusief'} BTW
+            {config.prices_include_tax ? t('incl_vat') : t('excl_vat')}
           </p>
         )}
 
@@ -93,7 +94,7 @@ export default function PriceSidebar({
         {groups.some((g) => g.is_required == 1 && Object.keys(selections[g.id] || {}).length === 0) && (
           <div className="gvc-sidebar__warning">
             <span>⚠</span>
-            <span>Vereiste opties nog niet geselecteerd</span>
+            <span>{t('required_options_missing')}</span>
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@
 
 import { useState, useRef, useEffect } from '@wordpress/element';
 import { formatPrice } from '../utils/price';
+import { t } from '../utils/i18n';
 
 export default function AddonItem({
   item,
@@ -51,7 +52,7 @@ export default function AddonItem({
   if (isSelected) className += ' gvc-item--selected';
   if (outOfStock) className += ' gvc-item--disabled';
 
-  // When user clicks "Toevoegen" (Add), we select the item with the current local qty
+  // When user clicks "Add", we select the item with the current local qty
   const handleAdd = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -102,7 +103,7 @@ export default function AddonItem({
                   </span>
                 )}
                 <span className="gvc-guarantee__sale-price">
-                  {price > 0 ? formatPrice(price) : 'Kostenlos'}
+                  {price > 0 ? formatPrice(price) : t('free')}
                 </span>
               </div>
             </div>
@@ -172,7 +173,7 @@ export default function AddonItem({
                   e.stopPropagation();
                   onInfo();
                 }}
-                title="Meer informatie"
+                title={t('more_info')}
               >
                 i
               </button>
@@ -185,14 +186,14 @@ export default function AddonItem({
 
           <div className="gvc-item__price">
             {isIncluded ? (
-              <span className="gvc-item__price--included">Inclusief</span>
+              <span className="gvc-item__price--included">{t('included')}</span>
             ) : (
               <span className="gvc-item__price--amount">(+ {formatPrice(price)})</span>
             )}
           </div>
 
           {outOfStock && (
-            <span className="gvc-item__stock gvc-item__stock--out">Niet op voorraad</span>
+            <span className="gvc-item__stock gvc-item__stock--out">{t('out_of_stock')}</span>
           )}
         </div>
       </div>
@@ -222,8 +223,8 @@ export default function AddonItem({
             type="button"
             className={`gvc-btn gvc-btn--add ${isSelected ? 'gvc-btn--added' : ''}`}
             onClick={handleAdd}
-            aria-label={isSelected ? 'Toegevoegd' : 'Toevoegen'}
-            title={isSelected ? 'Toegevoegd' : 'Toevoegen'}
+            aria-label={isSelected ? t('added') : t('add')}
+            title={isSelected ? t('added') : t('add')}
           >
             <span style={{ color: '#ffffff', WebkitTextFillColor: '#ffffff', fontSize: '18px', lineHeight: 1, display: 'block' }}>
               {isSelected ? '✓' : '+'}

@@ -6,6 +6,7 @@
 
 import { useState, useCallback } from '@wordpress/element';
 import AddonItem from './AddonItem';
+import { t } from '../utils/i18n';
 
 export default function AddonGroup({
   group,
@@ -101,7 +102,7 @@ export default function AddonGroup({
                       );
                     }}
                   >
-                    <option value="">— Selecteer {item.title} —</option>
+                    <option value="">{t('select_placeholder', { title: item.title })}</option>
                     {options.map((opt, idx) => {
                       const optPrice = parseFloat(opt.price) || 0;
                       return (
@@ -124,7 +125,7 @@ export default function AddonGroup({
         <div className="gvc-group__search">
           <input
             type="text"
-            placeholder="Zoek opties…"
+            placeholder={t('search_options')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="gvc-search-input"
@@ -152,10 +153,10 @@ export default function AddonGroup({
             if (item) onSelect(item, 1);
           }}
         >
-          {!group.is_required && <option value="">— Geen selectie —</option>}
+          {!group.is_required && <option value="">{t('no_selection')}</option>}
           {filtered.map((item) => (
             <option key={item.id} value={item.id}>
-              {item.title} — {parseFloat(item.price) > 0 ? `+€${parseFloat(item.price).toFixed(2)}` : 'Inclusief'}
+              {item.title} — {parseFloat(item.price) > 0 ? `+€${parseFloat(item.price).toFixed(2)}` : t('included')}
             </option>
           ))}
         </select>
@@ -216,7 +217,7 @@ export default function AddonGroup({
       )}
 
       {items.length === 0 && (
-        <p className="gvc-empty">Geen opties gevonden.</p>
+        <p className="gvc-empty">{t('no_options_found')}</p>
       )}
     </div>
   );

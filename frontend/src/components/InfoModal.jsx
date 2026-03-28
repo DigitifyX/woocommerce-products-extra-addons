@@ -5,6 +5,7 @@
 
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { formatPrice } from '../utils/price';
+import { t } from '../utils/i18n';
 
 export default function InfoModal({ item, group, selection, onSelect, onQuantityChange, onClose }) {
   const overlayRef = useRef(null);
@@ -62,7 +63,7 @@ export default function InfoModal({ item, group, selection, onSelect, onQuantity
   return (
     <div className="gvc-modal-overlay" ref={overlayRef} onClick={handleOverlayClick}>
       <div className="gvc-modal" role="dialog" aria-modal="true">
-        <button className="gvc-modal__close" onClick={onClose} aria-label="Sluiten" style={{ background: 'rgba(0,0,0,0.55)', color: '#fff', WebkitTextFillColor: '#fff', border: 'none', fontSize: '18px', fontWeight: 700, lineHeight: 1 }}>✕</button>
+        <button className="gvc-modal__close" onClick={onClose} aria-label={t('close')} style={{ background: 'rgba(0,0,0,0.55)', color: '#fff', WebkitTextFillColor: '#fff', border: 'none', fontSize: '18px', fontWeight: 700, lineHeight: 1 }}>✕</button>
 
         <div className="gvc-modal__content">
           {item.image_url && (
@@ -77,7 +78,7 @@ export default function InfoModal({ item, group, selection, onSelect, onQuantity
             {item.sku && <span className="gvc-modal__sku">SKU: {item.sku}</span>}
 
             <div className="gvc-modal__price">
-              {isIncluded ? <span className="gvc-item__price--included">Inclusief</span> : <span className="gvc-item__price--amount">+ {formatPrice(price)}</span>}
+              {isIncluded ? <span className="gvc-item__price--included">{t('included')}</span> : <span className="gvc-item__price--amount">+ {formatPrice(price)}</span>}
             </div>
 
             {item.description && (
@@ -86,7 +87,7 @@ export default function InfoModal({ item, group, selection, onSelect, onQuantity
 
             {meta && Object.keys(meta).length > 0 && (
               <div className="gvc-modal__meta">
-                <h4>Specificaties</h4>
+                <h4>{t('specifications')}</h4>
                 <table className="gvc-modal__meta-table">
                   <tbody>
                     {Object.entries(meta).map(([key, value]) => (
@@ -101,7 +102,7 @@ export default function InfoModal({ item, group, selection, onSelect, onQuantity
             )}
 
             {outOfStock && (
-              <div className="gvc-modal__stock-warning">Dit product is momenteel niet op voorraad.</div>
+              <div className="gvc-modal__stock-warning">{t('product_out_of_stock')}</div>
             )}
 
             {/* Smart Action Row */}
@@ -116,8 +117,8 @@ export default function InfoModal({ item, group, selection, onSelect, onQuantity
                   type="button"
                   className={`gvc-btn gvc-btn--add gvc-modal__add-btn ${isSelected ? 'gvc-btn--added' : ''}`}
                   onClick={handleAdd}
-                  aria-label={isSelected ? 'Toegevoegd' : 'Toevoegen'}
-                  title={isSelected ? 'Toegevoegd' : 'Toevoegen'}
+                  aria-label={isSelected ? t('added') : t('add')}
+                  title={isSelected ? t('added') : t('add')}
                 >
                   <span style={{ color: '#ffffff', WebkitTextFillColor: '#ffffff', fontSize: '18px', lineHeight: 1, display: 'block' }}>
                     {isSelected ? '✓' : '+'}
