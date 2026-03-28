@@ -68,6 +68,18 @@ class Cart {
 
             $qty = max( 1, (int) ( $sel['quantity'] ?? 1 ) );
 
+            // Capture custom field values if present
+            $custom_fields = [];
+            if ( ! empty( $sel['custom_fields'] ) && is_array( $sel['custom_fields'] ) ) {
+                foreach ( $sel['custom_fields'] as $key => $field_data ) {
+                    $custom_fields[ sanitize_key( $key ) ] = [
+                        'label' => sanitize_text_field( $field_data['label'] ?? $key ),
+                        'value' => sanitize_text_field( $field_data['value'] ?? '' ),
+                        'unit'  => sanitize_text_field( $field_data['unit'] ?? '' ),
+                    ];
+                }
+            }
+
             $validated[] = [
                 'item_id'       => (int) $item['id'],
                 'group_id'      => (int) $item['group_id'],
@@ -77,6 +89,7 @@ class Cart {
                 'item_type'     => $item['item_type'],
                 'wc_product_id' => $item['wc_product_id'] ? (int) $item['wc_product_id'] : null,
                 'sku'           => $item['sku'],
+                'custom_fields' => $custom_fields,
             ];
 
             $addons_total += $price * $qty;
@@ -142,6 +155,17 @@ class Cart {
                 'key'   => esc_html( $sel['title'] ),
                 'value' => $price_display . $qty_text,
             ];
+
+            // Display custom field values as sub-lines
+            if ( ! empty( $sel['custom_fields'] ) && is_array( $sel['custom_fields'] ) ) {
+                foreach ( $sel['custom_fields'] as $field ) {
+                    $unit_text = ! empty( $field['unit'] ) ? ' ' . esc_html( $field['unit'] ) : '';
+                    $item_data[] = [
+                        'key'   => '  ↳ ' . esc_html( $field['label'] ),
+                        'value' => esc_html( $field['value'] ) . $unit_text,
+                    ];
+                }
+            }
         }
 
         // Total addons line
@@ -186,6 +210,18 @@ class Cart {
                 wp_strip_all_tags( wc_price( $sel['price'] * $sel['quantity'] ) ) . $qty_text,
                 false
             );
+
+            // Persist custom field values in order metadata
+            if ( ! empty( $sel['custom_fields'] ) && is_array( $sel['custom_fields'] ) ) {
+                foreach ( $sel['custom_fields'] as $field ) {
+                    $unit_text = ! empty( $field['unit'] ) ? ' ' . $field['unit'] : '';
+                    $item->add_meta_data(
+                        '  ↳ ' . $field['label'],
+                        $field['value'] . $unit_text,
+                        false
+                    );
+                }
+            }
         }
 
         $item->add_meta_data(

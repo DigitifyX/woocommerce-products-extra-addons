@@ -8,6 +8,7 @@ import useConfigurator from '../hooks/useConfigurator';
 import AddonGroup from './AddonGroup';
 import PriceSidebar from './PriceSidebar';
 import InfoModal from './InfoModal';
+import CustomFieldsModal from './CustomFieldsModal';
 import { formatPrice } from '../utils/price';
 import { t } from '../utils/i18n';
 
@@ -31,6 +32,7 @@ export default function Configurator({ productId }) {
 
   const [modalItem, setModalItem] = useState(null);
   const [isMobileSummaryOpen, setMobileSummaryOpen] = useState(false);
+  const [customFieldsContext, setCustomFieldsContext] = useState(null);
   const containerRef = useRef(null);
 
   // CSS custom properties from settings
@@ -63,6 +65,42 @@ export default function Configurator({ productId }) {
   }
 
   const groups = config.groups;
+
+  /**
+   * Intercept item selection: if the item has custom_fields configured
+   * and is being selected (not deselected), show the custom fields modal
+   * to collect values before actually adding to selections.
+   */
+  const handleItemSelect = (groupId, item, qty, optIdx) => {
+    // qty === null means intentional deselect (guarantee toggle)
+    if (qty === null) {
+      selectItem(groupId, item, qty, optIdx);
+      return;
+    }
+
+    const meta = typeof item.meta_json === 'string'
+      ? JSON.parse(item.meta_json)
+      : (item.meta_json || {});
+    const customFields = meta?.custom_fields;
+    const isCurrentlySelected = !!selections[groupId]?.[item.id];
+
+    if (customFields && customFields.length > 0 && !isCurrentlySelected) {
+      // Collect custom field values first via modal
+      setCustomFieldsContext({ groupId, item, qty: qty || 1, optIdx });
+    } else {
+      // No custom fields, or deselecting — proceed normally
+      selectItem(groupId, item, qty, optIdx);
+    }
+  };
+
+  /**
+   * Called when the user confirms custom field values in the modal.
+   */
+  const handleCustomFieldsConfirm = (values) => {
+    const { groupId, item, qty, optIdx } = customFieldsContext;
+    selectItem(groupId, item, qty, optIdx, values);
+    setCustomFieldsContext(null);
+  };
 
   return (
     <div className="gvc-configurator" ref={containerRef}>
@@ -106,6 +144,18 @@ export default function Configurator({ productId }) {
                           <span className="gvc-step-panel__summary-price">
                             {line.total > 0 ? ` (+${formatPrice(line.total)})` : ''}
                           </span>
+                          {/* Show custom field values in summary */}
+                          {line.customFields && line.customFields.length > 0 && (
+                            <span className="gvc-step-panel__summary-fields">
+                              {' — '}
+                              {line.customFields.map((cf, i) => (
+                                <span key={i}>
+                                  {cf.value}{cf.unit ? ` ${cf.unit}` : ''}
+                                  {i < line.customFields.length - 1 ? ' × ' : ''}
+                                </span>
+                              ))}
+                            </span>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -124,7 +174,7 @@ export default function Configurator({ productId }) {
                     <AddonGroup
                       group={group}
                       selection={groupSels}
-                      onSelect={(item, qty, optIdx) => selectItem(group.id, item, qty, optIdx)}
+                      onSelect={(item, qty, optIdx) => handleItemSelect(group.id, item, qty, optIdx)}
                       onClear={() => clearSelection(group.id)}
                       onDeselectItem={(itemId) => deselectItem(group.id, itemId)}
                       onQuantityChange={(itemId, qty) => updateQuantity(group.id, itemId, qty)}
@@ -214,9 +264,19 @@ export default function Configurator({ productId }) {
           item={modalItem.item}
           group={modalItem.group}
           selection={selections[modalItem.group.id] || {}}
-          onSelect={(qty) => selectItem(modalItem.group.id, modalItem.item, qty)}
+          onSelect={(qty) => handleItemSelect(modalItem.group.id, modalItem.item, qty)}
           onQuantityChange={(qty) => updateQuantity(modalItem.group.id, modalItem.item.id, qty)}
           onClose={() => setModalItem(null)}
+        />
+      )}
+
+      {/* ── Custom Fields Modal ───────────────────────────── */}
+      {customFieldsContext && (
+        <CustomFieldsModal
+          item={customFieldsContext.item}
+          onConfirm={handleCustomFieldsConfirm}
+          onClose={() => setCustomFieldsContext(null)}
+          existingValues={null}
         />
       )}
     </div>

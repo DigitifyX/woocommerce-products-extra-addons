@@ -359,7 +359,9 @@
       conditions: initialMeta.conditions || [],
       conditions_match: initialMeta.conditions_match || 'all',
       // Select Dropdown options
-      dropdown_options: initialMeta.dropdown_options || []
+      dropdown_options: initialMeta.dropdown_options || [],
+      // Custom Input Fields
+      custom_fields: initialMeta.custom_fields || []
     });
     var form = s[0]; var setForm = s[1];
     var s2 = useState(''); var wcS = s2[0]; var setWcS = s2[1];
@@ -447,6 +449,18 @@
       }
     };
 
+    // ── Custom Input Fields helpers ──
+    var addCustomField = function () {
+      set('custom_fields', form.custom_fields.concat([{ key: '', label: '', type: 'number', unit: 'mm', required: true, placeholder: '' }]));
+    };
+    var updateCustomFieldFn = function (idx, field, val) {
+      var updated = form.custom_fields.map(function (f, i) { if (i === idx) { var nf = {}; for (var k in f) nf[k] = f[k]; nf[field] = val; return nf; } return f; });
+      set('custom_fields', updated);
+    };
+    var removeCustomField = function (idx) {
+      set('custom_fields', form.custom_fields.filter(function (_, i) { return i !== idx; }));
+    };
+
     // ── Build save payload ──
     var handleSave = function () {
       var payload = {
@@ -470,6 +484,10 @@
       if (form.conditions.length > 0) {
         payload.meta.conditions = form.conditions;
         payload.meta.conditions_match = form.conditions_match;
+      }
+      // Custom input fields meta
+      if (form.custom_fields.length > 0) {
+        payload.meta.custom_fields = form.custom_fields;
       }
       props.onSave(payload);
     };
@@ -565,6 +583,30 @@
           form.image_url && h('img', { src: form.image_url, style: { width: 60, height: 60, objectFit: 'cover', marginTop: 8, borderRadius: 4 } })
         ),
         h('div', { className: 'gvc-admin-field' }, h('label', null, h('input', { type: 'checkbox', checked: form.is_default == 1, onChange: function (e) { set('is_default', e.target.checked ? 1 : 0); } }), ' Default selection')),
+
+        // ═══════════ CUSTOM INPUT FIELDS SECTION ═══════════
+        (form.item_type === 'virtual' || form.item_type === 'wc_product') && h('div', { style: { marginTop: 16, padding: 16, background: '#f0fdf9', border: '1px solid #99f6e4', borderRadius: 6 } },
+          h('h4', { style: { margin: '0 0 4px', fontSize: 14, fontWeight: 600, color: '#0f766e' } }, '📐 Custom Input Fields'),
+          h('p', { style: { fontSize: 12, color: '#0d9488', margin: '0 0 12px' } }, 'Add custom input fields that customers must fill in when selecting this addon (e.g. Width, Depth for cut-to-size). Values appear in cart & order.'),
+          form.custom_fields.map(function (cf, idx) {
+            return h('div', { key: idx, style: { display: 'flex', gap: 6, marginBottom: 8, alignItems: 'center', padding: 10, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 6, flexWrap: 'wrap' } },
+              h('input', { type: 'text', value: cf.key, placeholder: 'Key (e.g. custom_width)', style: { width: 140, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 12 }, onChange: function (e) { updateCustomFieldFn(idx, 'key', e.target.value); } }),
+              h('input', { type: 'text', value: cf.label, placeholder: 'Label (e.g. Ihre Wunschbreite)', style: { flex: 1, minWidth: 160, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 12 }, onChange: function (e) { updateCustomFieldFn(idx, 'label', e.target.value); } }),
+              h('input', { type: 'text', value: cf.placeholder || '', placeholder: 'Placeholder (e.g. z.B. 2500)', style: { width: 150, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 12 }, onChange: function (e) { updateCustomFieldFn(idx, 'placeholder', e.target.value); } }),
+              h('select', { value: cf.type || 'number', style: { width: 80, padding: '6px 4px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 12 }, onChange: function (e) { updateCustomFieldFn(idx, 'type', e.target.value); } },
+                h('option', { value: 'number' }, 'Number'),
+                h('option', { value: 'text' }, 'Text')
+              ),
+              h('input', { type: 'text', value: cf.unit || '', placeholder: 'Unit (mm)', style: { width: 60, padding: '6px 8px', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 12 }, onChange: function (e) { updateCustomFieldFn(idx, 'unit', e.target.value); } }),
+              h('label', { style: { display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, whiteSpace: 'nowrap' } },
+                h('input', { type: 'checkbox', checked: cf.required !== false, onChange: function (e) { updateCustomFieldFn(idx, 'required', e.target.checked); } }),
+                'Req'
+              ),
+              h('button', { type: 'button', style: { background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 4, padding: '2px 8px', cursor: 'pointer', color: '#dc2626', fontSize: 14, lineHeight: 1.4 }, onClick: function () { removeCustomField(idx); } }, '×')
+            );
+          }),
+          h('button', { type: 'button', className: 'gvc-admin-btn gvc-admin-btn--secondary', style: { fontSize: 12, padding: '4px 12px' }, onClick: addCustomField }, '+ Add Field')
+        ),
 
         // ═══════════ CONDITIONS SECTION ═══════════
         h('div', { style: condSectionStyle },

@@ -34,17 +34,33 @@ export default function PriceSidebar({
           {totals.breakdown.map((line, idx) => {
             const group = groups.find((g) => g.id == line.groupId);
             return (
-              <div key={idx} className="gvc-sidebar__row gvc-sidebar__row--addon">
-                <span className="gvc-sidebar__label">
-                  <span className="gvc-sidebar__group-label">{group?.title || ''}</span>
-                  {line.title}
-                  {line.quantity > 1 && (
-                    <span className="gvc-sidebar__qty"> ×{line.quantity}</span>
-                  )}
-                </span>
-                <span className="gvc-sidebar__value">
-                  {line.total > 0 ? `+ ${formatPrice(line.total)}` : t('included')}
-                </span>
+              <div key={idx} className="gvc-sidebar__addon-block">
+                <div className="gvc-sidebar__row gvc-sidebar__row--addon">
+                  <span className="gvc-sidebar__label">
+                    <span className="gvc-sidebar__group-label">{group?.title || ''}</span>
+                    {line.title}
+                    {line.quantity > 1 && (
+                      <span className="gvc-sidebar__qty"> ×{line.quantity}</span>
+                    )}
+                  </span>
+                  <span className="gvc-sidebar__value">
+                    {line.total > 0 ? `+ ${formatPrice(line.total)}` : t('included')}
+                  </span>
+                </div>
+
+                {/* Custom field values (e.g. Width: 2500mm, Depth: 3000mm) */}
+                {line.customFields && line.customFields.length > 0 && (
+                  <div className="gvc-sidebar__custom-fields">
+                    {line.customFields.map((cf, i) => (
+                      <div key={i} className="gvc-sidebar__custom-field">
+                        <span className="gvc-sidebar__custom-field-label">{cf.label}:</span>
+                        <span className="gvc-sidebar__custom-field-value">
+                          {cf.value}{cf.unit ? ` ${cf.unit}` : ''}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}

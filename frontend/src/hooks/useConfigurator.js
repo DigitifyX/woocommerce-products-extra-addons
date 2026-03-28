@@ -61,7 +61,7 @@ export default function useConfigurator(productId) {
 
   // Select an item in a group
   // optionIndex is used for select_dropdown items to track which dropdown option was chosen
-  const selectItem = useCallback((groupId, item, quantity = 1, optionIndex) => {
+  const selectItem = useCallback((groupId, item, quantity = 1, optionIndex, customFieldsValues) => {
     setSelections((prev) => {
       const g = config?.groups?.find(g => g.id == groupId);
       const displayType = g?.display_type || 'radio';
@@ -87,7 +87,7 @@ export default function useConfigurator(productId) {
         });
         return {
           ...prev,
-          [groupId]: { ...keepDropdowns, [item.id]: { item_id: item.id, quantity, item } },
+          [groupId]: { ...keepDropdowns, [item.id]: { item_id: item.id, quantity, item, customFieldsValues } },
         };
       } else {
         // Multi select behavior for everything else (cards, radio, checkbox)
@@ -96,7 +96,7 @@ export default function useConfigurator(productId) {
           delete groupSels[item.id];
         } else {
           // Toggle on
-          groupSels[item.id] = { item_id: item.id, quantity, item };
+          groupSels[item.id] = { item_id: item.id, quantity, item, customFieldsValues };
         }
         return {
           ...prev,
@@ -160,12 +160,28 @@ export default function useConfigurator(productId) {
           displayTitle = sel.item.title + ': ' + sel.item._optionLabel;
         }
 
+        // Build custom fields display data
+        const cfValues = sel.customFieldsValues;
+        const cfConfig = sel.item?.meta_json?.custom_fields || [];
+        let customFields = null;
+        if (cfValues && Object.keys(cfValues).length > 0) {
+          customFields = Object.entries(cfValues).map(([key, value]) => {
+            const fieldCfg = cfConfig.find((f) => f.key === key);
+            return {
+              label: fieldCfg?.label || key,
+              value,
+              unit: fieldCfg?.unit || '',
+            };
+          });
+        }
+
         breakdown.push({
           title: displayTitle,
           price,
           quantity: qty,
           total: lineTotal,
           groupId: sel.item.group_id,
+          customFields,
         });
       });
     });
@@ -204,6 +220,19 @@ export default function useConfigurator(productId) {
           entry.selected_option = sel.selectedOptionIndex;
           entry.selected_option_label = sel.item?._optionLabel || '';
           entry.selected_option_price = parseFloat(sel.item?.price) || 0;
+        }
+        // Include custom fields values
+        if (sel.customFieldsValues && Object.keys(sel.customFieldsValues).length > 0) {
+          const cfConfig = sel.item?.meta_json?.custom_fields || [];
+          entry.custom_fields = {};
+          Object.entries(sel.customFieldsValues).forEach(([key, value]) => {
+            const fieldCfg = cfConfig.find((f) => f.key === key);
+            entry.custom_fields[key] = {
+              label: fieldCfg?.label || key,
+              value,
+              unit: fieldCfg?.unit || '',
+            };
+          });
         }
         payload.push(entry);
       });

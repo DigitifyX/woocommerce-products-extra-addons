@@ -49,6 +49,12 @@ const translations = {
     close: 'Schließen',
     specifications: 'Spezifikationen',
     product_out_of_stock: 'Dieses Produkt ist derzeit nicht auf Lager.',
+
+    // CustomFieldsModal
+    custom_fields_title: 'Angaben für: {title}',
+    confirm: 'Bestätigen',
+    cancel: 'Abbrechen',
+    field_required: 'Dieses Feld ist erforderlich.',
   },
 
   nl_NL: {
@@ -82,6 +88,11 @@ const translations = {
     close: 'Sluiten',
     specifications: 'Specificaties',
     product_out_of_stock: 'Dit product is momenteel niet op voorraad.',
+
+    custom_fields_title: 'Gegevens voor: {title}',
+    confirm: 'Bevestigen',
+    cancel: 'Annuleren',
+    field_required: 'Dit veld is verplicht.',
   },
 
   fr_FR: {
@@ -115,6 +126,11 @@ const translations = {
     close: 'Fermer',
     specifications: 'Spécifications',
     product_out_of_stock: 'Ce produit est actuellement en rupture de stock.',
+
+    custom_fields_title: 'Détails pour : {title}',
+    confirm: 'Confirmer',
+    cancel: 'Annuler',
+    field_required: 'Ce champ est obligatoire.',
   },
 
   tr_TR: {
@@ -148,6 +164,11 @@ const translations = {
     close: 'Kapat',
     specifications: 'Özellikler',
     product_out_of_stock: 'Bu ürün şu anda stokta bulunmamaktadır.',
+
+    custom_fields_title: '{title} için bilgiler',
+    confirm: 'Onayla',
+    cancel: 'İptal',
+    field_required: 'Bu alan zorunludur.',
   },
 };
 

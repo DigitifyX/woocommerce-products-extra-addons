@@ -1385,3 +1385,162 @@
   color: var(--gvc-text-muted);
   flex-shrink: 0;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Custom Fields Modal
+   ══════════════════════════════════════════════════════════════ */
+
+.gvc-custom-fields-modal {
+  max-width: 480px;
+}
+
+.gvc-custom-fields-modal__content {
+  padding: 28px;
+}
+
+.gvc-custom-fields-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gvc-border);
+}
+
+.gvc-custom-fields-modal__img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+  border: 1px solid var(--gvc-border);
+}
+
+.gvc-custom-fields-modal__title {
+  margin: 0 0 4px 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gvc-text);
+  line-height: 1.3;
+}
+
+.gvc-custom-fields-modal__desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--gvc-text-muted);
+  line-height: 1.4;
+}
+
+.gvc-custom-fields-modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.gvc-custom-fields-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gvc-custom-fields-modal__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gvc-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gvc-custom-fields-modal__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gvc-custom-fields-modal__input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1.5px solid var(--gvc-border);
+  border-radius: var(--gvc-radius);
+  font-size: 15px;
+  outline: none;
+  transition: border-color var(--gvc-transition), box-shadow var(--gvc-transition);
+  background: var(--gvc-card-bg);
+  color: var(--gvc-text);
+}
+
+.gvc-custom-fields-modal__input:focus {
+  border-color: var(--gvc-primary);
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+}
+
+.gvc-custom-fields-modal__input--error {
+  border-color: var(--gvc-error);
+}
+
+.gvc-custom-fields-modal__input--error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.12);
+}
+
+.gvc-custom-fields-modal__unit {
+  font-size: 14px;
+  color: var(--gvc-text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 28px;
+}
+
+.gvc-custom-fields-modal__error {
+  font-size: 12px;
+  color: var(--gvc-error);
+  font-weight: 500;
+}
+
+.gvc-custom-fields-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gvc-border);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Sidebar – Custom Field Values
+   ══════════════════════════════════════════════════════════════ */
+
+.gvc-sidebar__addon-block {
+  margin-bottom: 2px;
+}
+
+.gvc-sidebar__custom-fields {
+  padding: 4px 0 6px 12px;
+  margin-bottom: 4px;
+  border-left: 2px solid rgba(45, 106, 79, 0.15);
+}
+
+.gvc-sidebar__custom-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  font-size: 12px;
+}
+
+.gvc-sidebar__custom-field-label {
+  color: var(--gvc-text-muted);
+  font-weight: 500;
+}
+
+.gvc-sidebar__custom-field-value {
+  color: var(--gvc-text);
+  font-weight: 600;
+}
+
+/* Step panel summary custom fields */
+.gvc-step-panel__summary-fields {
+  color: var(--gvc-text-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
