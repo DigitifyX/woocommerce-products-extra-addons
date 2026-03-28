@@ -1690,6 +1690,7 @@
 form.cart .quantity {
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
   background: #FFFFFF !important;
   border-radius: 100px !important;
   padding: 4px 6px !important;
@@ -1699,7 +1700,7 @@ form.cart .quantity {
   box-sizing: border-box !important;
   transition: border-color 200ms ease !important;
   margin-right: 12px !important;
-  min-width: 110px !important;
+  min-width: 120px !important;
 }
 
 .variations_form .quantity:hover,
@@ -1711,7 +1712,8 @@ form.cart .quantity:hover {
 .variations_form .quantity .qty,
 .single_variation_wrap .quantity .qty,
 form.cart .quantity .qty {
-  width: 36px !important;
+  flex: 1 !important;
+  min-width: 36px !important;
   text-align: center !important;
   border: none !important;
   background: transparent !important;
