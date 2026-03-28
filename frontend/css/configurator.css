@@ -1551,6 +1551,9 @@
    Uses plugin CSS custom properties for consistency.
    ══════════════════════════════════════════════════════════════ */
 
+/* Load Montserrat font for WooCommerce elements */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
 /* ── Variation Form Container ────────────────────────────────── */
 .variations_form .variations {
   width: 100%;
@@ -1687,36 +1690,39 @@
 form.cart .quantity {
   display: inline-flex !important;
   align-items: center !important;
-  background: var(--gvc-bg, #FAFBFC) !important;
+  background: #FFFFFF !important;
   border-radius: 100px !important;
-  padding: 4px !important;
+  padding: 4px 6px !important;
   border: 1.5px solid var(--gvc-border, #E2E8F0) !important;
-  gap: 2px !important;
+  gap: 0 !important;
   height: 48px !important;
   box-sizing: border-box !important;
   transition: border-color 200ms ease !important;
   margin-right: 12px !important;
+  min-width: 110px !important;
 }
 
 .variations_form .quantity:hover,
 .single_variation_wrap .quantity:hover,
 form.cart .quantity:hover {
-  border-color: var(--gvc-accent, #40916C) !important;
+  border-color: #8BA888 !important;
 }
 
 .variations_form .quantity .qty,
 .single_variation_wrap .quantity .qty,
 form.cart .quantity .qty {
-  width: 48px !important;
+  width: 36px !important;
   text-align: center !important;
   border: none !important;
   background: transparent !important;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
   font-size: 16px !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   color: var(--gvc-text, #1A202C) !important;
   padding: 0 !important;
   margin: 0 !important;
   -moz-appearance: textfield !important;
+  appearance: textfield !important;
   outline: none !important;
   box-shadow: none !important;
   height: 100% !important;
@@ -1734,27 +1740,28 @@ form.cart .quantity .qty::-webkit-inner-spin-button {
   margin: 0 !important;
 }
 
-/* Style WooCommerce +/- buttons if theme provides them */
+/* +/- buttons inside quantity */
 .variations_form .quantity .plus,
 .variations_form .quantity .minus,
 .single_variation_wrap .quantity .plus,
 .single_variation_wrap .quantity .minus,
 form.cart .quantity .plus,
 form.cart .quantity .minus {
-  width: 36px !important;
-  height: 36px !important;
+  width: 34px !important;
+  height: 34px !important;
   border: none !important;
   border-radius: 100px !important;
-  background: var(--gvc-card-bg, #FFFFFF) !important;
+  background: transparent !important;
   cursor: pointer !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   color: var(--gvc-text, #1A202C) !important;
   transition: all 200ms ease !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: none !important;
   padding: 0 !important;
   line-height: 1 !important;
 }
@@ -1765,9 +1772,8 @@ form.cart .quantity .minus {
 .single_variation_wrap .quantity .minus:hover,
 form.cart .quantity .plus:hover,
 form.cart .quantity .minus:hover {
-  background: var(--gvc-primary, #2D6A4F) !important;
-  color: #fff !important;
-  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.2) !important;
+  background: rgba(139, 168, 136, 0.15) !important;
+  color: #1E514D !important;
 }
 
 /* ── Add to Cart Button ──────────────────────────────────────── */
@@ -1781,18 +1787,21 @@ form.cart button[type="submit"].single_add_to_cart_button,
   gap: 8px !important;
   padding: 14px 32px !important;
   border-radius: 100px !important;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif !important;
   font-size: 15px !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-  border: 2px solid var(--gvc-primary, #2D6A4F) !important;
-  background: var(--gvc-primary, #2D6A4F) !important;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 2px solid #8BA888 !important;
+  background: #8BA888 !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
-  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.25) !important;
+  box-shadow: 0 4px 14px rgba(139, 168, 136, 0.3) !important;
   text-transform: none !important;
-  letter-spacing: 0 !important;
+  letter-spacing: 0.02em !important;
   min-height: 48px !important;
+  width: 500px !important;
+  max-width: 100% !important;
   text-decoration: none !important;
   line-height: 1.2 !important;
 }
@@ -1801,9 +1810,9 @@ form.cart button[type="submit"].single_add_to_cart_button,
 form.cart .single_add_to_cart_button:hover,
 form.cart button[type="submit"].single_add_to_cart_button:hover,
 .woocommerce-variation-add-to-cart .button:hover {
-  background: var(--gvc-accent, #40916C) !important;
-  border-color: var(--gvc-accent, #40916C) !important;
-  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.35) !important;
+  background: #1E514D !important;
+  border-color: #1E514D !important;
+  box-shadow: 0 6px 20px rgba(30, 81, 77, 0.35) !important;
   transform: translateY(-1px) !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
@@ -1813,7 +1822,7 @@ form.cart button[type="submit"].single_add_to_cart_button:hover,
 form.cart .single_add_to_cart_button:active,
 .woocommerce-variation-add-to-cart .button:active {
   transform: translateY(0) !important;
-  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.2) !important;
+  box-shadow: 0 2px 8px rgba(30, 81, 77, 0.2) !important;
 }
 
 /* Disabled state */
@@ -1861,3 +1870,4 @@ form.cart .single_add_to_cart_button:active,
 .woocommerce-variation-availability p.stock.out-of-stock {
   color: var(--gvc-error, #E53E3E) !important;
 }
+
