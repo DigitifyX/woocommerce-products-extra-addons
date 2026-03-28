@@ -85,21 +85,28 @@ export default function InfoModal({ item, group, selection, onSelect, onQuantity
               <div className="gvc-modal__desc" dangerouslySetInnerHTML={{ __html: item.description }} />
             )}
 
-            {meta && Object.keys(meta).length > 0 && (
-              <div className="gvc-modal__meta">
-                <h4>{t('specifications')}</h4>
-                <table className="gvc-modal__meta-table">
-                  <tbody>
-                    {Object.entries(meta).map(([key, value]) => (
-                      <tr key={key}>
-                        <td className="gvc-modal__meta-key">{key}</td>
-                        <td className="gvc-modal__meta-val">{String(value)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {meta && Object.keys(meta).length > 0 && (() => {
+              const internalKeys = ['custom_fields', 'conditions', 'conditions_match', 'dropdown_options', 'features', 'subtitle', 'original_price'];
+              const visibleEntries = Object.entries(meta).filter(([key, value]) =>
+                !internalKeys.includes(key) && typeof value !== 'object'
+              );
+              if (visibleEntries.length === 0) return null;
+              return (
+                <div className="gvc-modal__meta">
+                  <h4>{t('specifications')}</h4>
+                  <table className="gvc-modal__meta-table">
+                    <tbody>
+                      {visibleEntries.map(([key, value]) => (
+                        <tr key={key}>
+                          <td className="gvc-modal__meta-key">{key}</td>
+                          <td className="gvc-modal__meta-val">{String(value)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })()}
 
             {outOfStock && (
               <div className="gvc-modal__stock-warning">{t('product_out_of_stock')}</div>
