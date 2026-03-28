@@ -1544,3 +1544,320 @@
   font-size: 12px;
   font-weight: 400;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   WooCommerce Product Page Branding
+   Auto-applied when configurator is active on a product page.
+   Uses plugin CSS custom properties for consistency.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Variation Form Container ────────────────────────────────── */
+.variations_form .variations {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+
+.variations_form .variations tr {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.variations_form .variations td {
+  padding: 0 !important;
+  border: none !important;
+  background: none !important;
+}
+
+/* ── Variation Labels ────────────────────────────────────────── */
+.variations_form .variations td.label,
+.variations_form .variations th.label {
+  display: block;
+  width: 100% !important;
+}
+
+.variations_form .variations td.label label,
+.variations_form .variations th.label label {
+  display: block;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--gvc-text, #1A202C) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  letter-spacing: -0.01em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+}
+
+/* ── Variation Dropdowns ─────────────────────────────────────── */
+.variations_form .variations td.value,
+.variations_form .variations td select,
+.variations_form .variations .value select {
+  width: 100% !important;
+}
+
+.variations_form .variations select,
+.variations_form .variations .value select {
+  width: 100% !important;
+  padding: 12px 40px 12px 16px !important;
+  border: 1.5px solid var(--gvc-border, #E2E8F0) !important;
+  border-radius: var(--gvc-radius, 10px) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--gvc-text, #1A202C) !important;
+  background-color: var(--gvc-card-bg, #FFFFFF) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%23718096' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 12px !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  cursor: pointer;
+  transition: border-color 200ms ease, box-shadow 200ms ease !important;
+  min-height: 48px !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  line-height: 1.4 !important;
+}
+
+.variations_form .variations select:hover {
+  border-color: var(--gvc-accent, #40916C) !important;
+  box-shadow: 0 2px 6px rgba(45, 106, 79, 0.08) !important;
+}
+
+.variations_form .variations select:focus {
+  border-color: var(--gvc-primary, #2D6A4F) !important;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12) !important;
+}
+
+/* Hide the reset link or style it subtly */
+.variations_form .variations .reset_variations {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12px !important;
+  color: var(--gvc-text-muted, #718096) !important;
+  text-decoration: none !important;
+  opacity: 0.7;
+  transition: opacity 200ms ease, color 200ms ease;
+}
+
+.variations_form .variations .reset_variations:hover {
+  opacity: 1;
+  color: var(--gvc-primary, #2D6A4F) !important;
+}
+
+/* ── Variation Price Display ─────────────────────────────────── */
+.woocommerce-variation-price .price,
+.woocommerce-variation-price .price .woocommerce-Price-amount,
+.single_variation_wrap .woocommerce-variation-price .price {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: var(--gvc-primary, #2D6A4F) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.woocommerce-variation-price .price del,
+.woocommerce-variation-price .price del .woocommerce-Price-amount {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: var(--gvc-text-muted, #718096) !important;
+  opacity: 0.6;
+}
+
+.woocommerce-variation-price .price ins {
+  text-decoration: none !important;
+}
+
+/* Also style the main product price */
+.product .summary .price,
+.product .summary > .price .woocommerce-Price-amount {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: var(--gvc-primary, #2D6A4F) !important;
+  letter-spacing: -0.02em;
+}
+
+/* ── Quantity Input ──────────────────────────────────────────── */
+.variations_form .quantity,
+.single_variation_wrap .quantity,
+form.cart .quantity {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: var(--gvc-bg, #FAFBFC) !important;
+  border-radius: 100px !important;
+  padding: 4px !important;
+  border: 1.5px solid var(--gvc-border, #E2E8F0) !important;
+  gap: 2px !important;
+  height: 48px !important;
+  box-sizing: border-box !important;
+  transition: border-color 200ms ease !important;
+  margin-right: 12px !important;
+}
+
+.variations_form .quantity:hover,
+.single_variation_wrap .quantity:hover,
+form.cart .quantity:hover {
+  border-color: var(--gvc-accent, #40916C) !important;
+}
+
+.variations_form .quantity .qty,
+.single_variation_wrap .quantity .qty,
+form.cart .quantity .qty {
+  width: 48px !important;
+  text-align: center !important;
+  border: none !important;
+  background: transparent !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--gvc-text, #1A202C) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  -moz-appearance: textfield !important;
+  outline: none !important;
+  box-shadow: none !important;
+  height: 100% !important;
+  line-height: 1 !important;
+}
+
+/* Hide spinner arrows */
+.variations_form .quantity .qty::-webkit-outer-spin-button,
+.variations_form .quantity .qty::-webkit-inner-spin-button,
+.single_variation_wrap .quantity .qty::-webkit-outer-spin-button,
+.single_variation_wrap .quantity .qty::-webkit-inner-spin-button,
+form.cart .quantity .qty::-webkit-outer-spin-button,
+form.cart .quantity .qty::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* Style WooCommerce +/- buttons if theme provides them */
+.variations_form .quantity .plus,
+.variations_form .quantity .minus,
+.single_variation_wrap .quantity .plus,
+.single_variation_wrap .quantity .minus,
+form.cart .quantity .plus,
+form.cart .quantity .minus {
+  width: 36px !important;
+  height: 36px !important;
+  border: none !important;
+  border-radius: 100px !important;
+  background: var(--gvc-card-bg, #FFFFFF) !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--gvc-text, #1A202C) !important;
+  transition: all 200ms ease !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+.variations_form .quantity .plus:hover,
+.variations_form .quantity .minus:hover,
+.single_variation_wrap .quantity .plus:hover,
+.single_variation_wrap .quantity .minus:hover,
+form.cart .quantity .plus:hover,
+form.cart .quantity .minus:hover {
+  background: var(--gvc-primary, #2D6A4F) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.2) !important;
+}
+
+/* ── Add to Cart Button ──────────────────────────────────────── */
+.single_variation_wrap .single_add_to_cart_button,
+form.cart .single_add_to_cart_button,
+form.cart button[type="submit"].single_add_to_cart_button,
+.woocommerce-variation-add-to-cart .button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 14px 32px !important;
+  border-radius: 100px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 2px solid var(--gvc-primary, #2D6A4F) !important;
+  background: var(--gvc-primary, #2D6A4F) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.25) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  min-height: 48px !important;
+  text-decoration: none !important;
+  line-height: 1.2 !important;
+}
+
+.single_variation_wrap .single_add_to_cart_button:hover,
+form.cart .single_add_to_cart_button:hover,
+form.cart button[type="submit"].single_add_to_cart_button:hover,
+.woocommerce-variation-add-to-cart .button:hover {
+  background: var(--gvc-accent, #40916C) !important;
+  border-color: var(--gvc-accent, #40916C) !important;
+  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.35) !important;
+  transform: translateY(-1px) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.single_variation_wrap .single_add_to_cart_button:active,
+form.cart .single_add_to_cart_button:active,
+.woocommerce-variation-add-to-cart .button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.2) !important;
+}
+
+/* Disabled state */
+.single_variation_wrap .single_add_to_cart_button:disabled,
+.single_variation_wrap .single_add_to_cart_button.disabled,
+.woocommerce-variation-add-to-cart .button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Variation Description ───────────────────────────────────── */
+.woocommerce-variation-description p {
+  font-size: 13px !important;
+  color: var(--gvc-text-muted, #718096) !important;
+  line-height: 1.5 !important;
+  margin: 8px 0 !important;
+}
+
+/* ── Layout Polish ───────────────────────────────────────────── */
+.single_variation_wrap {
+  margin-top: 16px;
+}
+
+.woocommerce-variation-add-to-cart {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  margin-top: 8px;
+}
+
+/* In stock text */
+.woocommerce-variation-availability p.stock {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  margin: 8px 0 !important;
+}
+
+.woocommerce-variation-availability p.stock.in-stock {
+  color: var(--gvc-success, #38A169) !important;
+}
+
+.woocommerce-variation-availability p.stock.out-of-stock {
+  color: var(--gvc-error, #E53E3E) !important;
+}
