@@ -31,6 +31,8 @@ const translations = {
     previous: '← Zurück',
     next: 'Weiter →',
     select_required: 'Bitte wählen Sie die erforderlichen Optionen:',
+    read_more: 'Mehr anzeigen',
+    show_less: 'Weniger anzeigen',
 
     // AddonGroup
     select_placeholder: '— {title} auswählen —',
@@ -76,6 +78,8 @@ const translations = {
     previous: '← Vorige',
     next: 'Volgende →',
     select_required: 'Selecteer vereiste opties:',
+    read_more: 'Meer weergeven',
+    show_less: 'Minder weergeven',
 
     select_placeholder: '— Selecteer {title} —',
     search_options: 'Zoek opties…',
@@ -116,6 +120,8 @@ const translations = {
     previous: '← Précédent',
     next: 'Suivant →',
     select_required: 'Veuillez sélectionner les options requises :',
+    read_more: 'Voir plus',
+    show_less: 'Voir moins',
 
     select_placeholder: '— Sélectionner {title} —',
     search_options: 'Rechercher des options…',
@@ -156,6 +162,8 @@ const translations = {
     previous: '← Önceki',
     next: 'Sonraki →',
     select_required: 'Lütfen gerekli seçenekleri belirleyin:',
+    read_more: 'Daha fazla göster',
+    show_less: 'Daha az göster',
 
     select_placeholder: '— {title} seçin —',
     search_options: 'Seçenekleri ara…',

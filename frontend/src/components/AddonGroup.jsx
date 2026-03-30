@@ -8,6 +8,8 @@ import { useState, useCallback } from '@wordpress/element';
 import AddonItem from './AddonItem';
 import { t } from '../utils/i18n';
 
+const DESC_LIMIT = 70;
+
 export default function AddonGroup({
   group,
   selection,
@@ -19,8 +21,15 @@ export default function AddonGroup({
   lazyLoad,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [descExpanded, setDescExpanded] = useState(false);
   const items = group.items || [];
   const displayType = group.display_type || 'radio';
+
+  // Strip HTML tags to get plain text length
+  const descPlain = group.description
+    ? group.description.replace(/<[^>]*>/g, '')
+    : '';
+  const isLongDesc = descPlain.length > DESC_LIMIT;
 
   // Separate select_dropdown items from regular items
   const selectDropdownItems = items.filter((item) => item.item_type === 'select_dropdown');
@@ -47,10 +56,29 @@ export default function AddonGroup({
       <div className="gvc-group__header">
         {/* Title has been moved to accordion panel header */}
         {group.description && (
-          <div
-            className="gvc-group__desc"
-            dangerouslySetInnerHTML={{ __html: group.description }}
-          />
+          <div className="gvc-group__desc-wrap">
+            <div
+              className={`gvc-group__desc ${isLongDesc && !descExpanded ? 'gvc-group__desc--truncated' : ''}`}
+              dangerouslySetInnerHTML={{
+                __html: isLongDesc && !descExpanded
+                  ? descPlain.substring(0, DESC_LIMIT) + '…'
+                  : group.description,
+              }}
+            />
+            {isLongDesc && (
+              <button
+                type="button"
+                className="gvc-group__desc-toggle"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDescExpanded(!descExpanded);
+                }}
+              >
+                {descExpanded ? t('show_less') : t('read_more')}
+                <span className={`gvc-group__desc-arrow ${descExpanded ? 'gvc-group__desc-arrow--up' : ''}`}>▾</span>
+              </button>
+            )}
+          </div>
         )}
       </div>
 
