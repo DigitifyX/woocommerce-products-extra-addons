@@ -758,6 +758,26 @@
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   gap: 12px;
   width: 100%;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .gvc-step-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gvc-step-nav .gvc-btn {
+    text-align: center;
+    justify-content: center;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .gvc-step-nav__complete {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .gvc-step-nav__complete {

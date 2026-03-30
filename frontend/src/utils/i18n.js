@@ -29,7 +29,7 @@ const translations = {
     // Configurator
     loading: 'Konfiguration wird geladen…',
     previous: '← Zurück',
-    next: 'Weiter →',
+    next: 'Weiter zur nächsten Konfiguration →',
     select_required: 'Bitte wählen Sie die erforderlichen Optionen:',
     read_more: 'Mehr anzeigen',
     show_less: 'Weniger anzeigen',
@@ -76,7 +76,7 @@ const translations = {
 
     loading: 'Configuratie laden…',
     previous: '← Vorige',
-    next: 'Volgende →',
+    next: 'Verder naar volgende configuratie →',
     select_required: 'Selecteer vereiste opties:',
     read_more: 'Meer weergeven',
     show_less: 'Minder weergeven',
@@ -118,7 +118,7 @@ const translations = {
 
     loading: 'Chargement de la configuration…',
     previous: '← Précédent',
-    next: 'Suivant →',
+    next: 'Passer à la configuration suivante →',
     select_required: 'Veuillez sélectionner les options requises :',
     read_more: 'Voir plus',
     show_less: 'Voir moins',
@@ -160,7 +160,7 @@ const translations = {
 
     loading: 'Yapılandırma yükleniyor…',
     previous: '← Önceki',
-    next: 'Sonraki →',
+    next: 'Sonraki yapılandırmaya geç →',
     select_required: 'Lütfen gerekli seçenekleri belirleyin:',
     read_more: 'Daha fazla göster',
     show_less: 'Daha az göster',
