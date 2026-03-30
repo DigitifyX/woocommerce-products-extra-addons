@@ -93,6 +93,17 @@ export default function AddonItem({
             />
           </div>
 
+          {/* Guarantee image */}
+          {item.image_url && (
+            <div className="gvc-guarantee__img-wrap">
+              <img
+                src={item.image_url}
+                alt={item.title}
+                className="gvc-guarantee__img"
+              />
+            </div>
+          )}
+
           <div className="gvc-guarantee__info">
             <div className="gvc-guarantee__title-row">
               <h4 className="gvc-guarantee__title">{item.title}</h4>
@@ -115,6 +126,14 @@ export default function AddonItem({
             )}
           </div>
         </div>
+
+        {/* Guarantee description */}
+        {item.description && (
+          <div
+            className="gvc-guarantee__desc"
+            dangerouslySetInnerHTML={{ __html: item.description }}
+          />
+        )}
 
         {features.length > 0 && (
           <ul className="gvc-guarantee__features">
