@@ -3,7 +3,7 @@
  * Plugin Name: GartenVista Product Configurator
  * Plugin URI:  https://gartenvista.de
  * Description: High-performance modular product configurator for WooCommerce with 2000+ product support, React UI, and Redis caching.
- * Version:     1.2.7
+ * Version:     1.2.8
  * Author:      Shakir Ahmed Joy
  * Author URI:  https://www.shakirjoy.xyz/
  * Text Domain: gv-configurator
@@ -18,7 +18,7 @@
 defined('ABSPATH') || exit;
 
 /* ── Constants ─────────────────────────────────────────────── */
-define('GVC_VERSION', '1.2.7');
+define('GVC_VERSION', '1.2.8');
 define('GVC_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('GVC_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('GVC_PLUGIN_FILE', __FILE__);

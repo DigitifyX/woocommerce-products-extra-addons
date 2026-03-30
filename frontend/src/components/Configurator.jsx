@@ -200,7 +200,7 @@ export default function Configurator({ productId }) {
                         <div /> /* Empty div to maintain flex space-between */
                       )}
 
-                      {/* Right side: Next (Hidden on last step if only 1 group, else shown) */}
+                      {/* Right side: Next (Hidden on last step) */}
                       {activeStep < groups.length - 1 && groups.length > 1 && (
                         <button
                           type="button"
@@ -214,10 +214,32 @@ export default function Configurator({ productId }) {
                         </button>
                       )}
 
-                      {/* Show validation errors on the last step if needed */}
-                      {activeStep === groups.length - 1 && !validation.valid && (
-                        <div className="gvc-validation-msg" style={{ alignSelf: 'center', color: 'var(--gvc-error)' }}>
-                          {t('select_required')} {validation.missing.map(g => g.title).join(', ')}
+                      {/* Last step: "Complete Configuration" button → scrolls to price/add-to-cart */}
+                      {activeStep === groups.length - 1 && (
+                        <div className="gvc-step-nav__complete">
+                          {/* Show validation errors inline if needed */}
+                          {!validation.valid && (
+                            <div className="gvc-validation-msg" style={{ color: 'var(--gvc-error)' }}>
+                              {t('select_required')} {validation.missing.map(g => g.title).join(', ')}
+                            </div>
+                          )}
+                          <button
+                            type="button"
+                            className="gvc-btn gvc-btn--complete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // Try WooCommerce add-to-cart form first, then GVC sidebar
+                              const target =
+                                document.querySelector('.gvc-sidebar:not(.gvc-sidebar--mobile)') ||
+                                document.querySelector('form.cart') ||
+                                document.querySelector('.summary .price');
+                              if (target) {
+                                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              }
+                            }}
+                          >
+                            {t('complete_configuration')}
+                          </button>
                         </div>
                       )}
                     </div>

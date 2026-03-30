@@ -55,6 +55,9 @@ const translations = {
     confirm: 'Bestätigen',
     cancel: 'Abbrechen',
     field_required: 'Dieses Feld ist erforderlich.',
+
+    // Complete Configuration
+    complete_configuration: 'Konfiguration abschließen ✓',
   },
 
   nl_NL: {
@@ -93,6 +96,8 @@ const translations = {
     confirm: 'Bevestigen',
     cancel: 'Annuleren',
     field_required: 'Dit veld is verplicht.',
+
+    complete_configuration: 'Configuratie afronden ✓',
   },
 
   fr_FR: {
@@ -131,6 +136,8 @@ const translations = {
     confirm: 'Confirmer',
     cancel: 'Annuler',
     field_required: 'Ce champ est obligatoire.',
+
+    complete_configuration: 'Terminer la configuration ✓',
   },
 
   tr_TR: {
@@ -169,6 +176,8 @@ const translations = {
     confirm: 'Onayla',
     cancel: 'İptal',
     field_required: 'Bu alan zorunludur.',
+
+    complete_configuration: 'Yapılandırmayı tamamla ✓',
   },
 };
 

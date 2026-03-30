@@ -773,6 +773,30 @@
   cursor: not-allowed;
 }
 
+/* "Complete Configuration" button — signals the end of configuration */
+.gvc-btn--complete {
+  background: var(--gvc-success) !important;
+  color: #fff !important;
+  border-color: var(--gvc-success) !important;
+  box-shadow: 0 2px 10px rgba(56, 161, 105, 0.25) !important;
+  padding: 12px 28px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+}
+
+.gvc-btn--complete:hover {
+  background: #2F8B5A !important;
+  border-color: #2F8B5A !important;
+  box-shadow: 0 4px 16px rgba(56, 161, 105, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+.gvc-btn--complete:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(56, 161, 105, 0.2) !important;
+}
+
 .gvc-validation-msg {
   font-size: 13px;
   color: var(--gvc-warning);
