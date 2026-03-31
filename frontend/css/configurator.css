@@ -214,17 +214,33 @@
   align-items: center;
   gap: 4px;
   background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
   border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   padding: 2px 0 !important;
+  margin: 0 !important;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
   color: var(--gvc-primary) !important;
-  transition: color var(--gvc-transition);
+  -webkit-text-fill-color: var(--gvc-primary) !important;
+  text-decoration: none;
+  transition: color var(--gvc-transition), text-decoration var(--gvc-transition);
+  outline: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
 }
 
-.gvc-group__desc-toggle:hover {
+.gvc-group__desc-toggle:hover,
+.gvc-group__desc-toggle:focus {
   color: var(--gvc-accent) !important;
+  -webkit-text-fill-color: var(--gvc-accent) !important;
+  text-decoration: underline;
+  background: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
 .gvc-group__desc-arrow {
@@ -833,10 +849,10 @@
 
 /* "Complete Configuration" button — signals the end of configuration */
 .gvc-btn--complete {
-  background: var(--gvc-success) !important;
+  background: #F3722C !important;
   color: #fff !important;
-  border-color: var(--gvc-success) !important;
-  box-shadow: 0 2px 10px rgba(56, 161, 105, 0.25) !important;
+  border-color: #F3722C !important;
+  box-shadow: 0 2px 10px rgba(243, 114, 44, 0.25) !important;
   padding: 12px 28px !important;
   font-size: 15px !important;
   font-weight: 700 !important;
@@ -844,15 +860,15 @@
 }
 
 .gvc-btn--complete:hover {
-  background: #2F8B5A !important;
-  border-color: #2F8B5A !important;
-  box-shadow: 0 4px 16px rgba(56, 161, 105, 0.35) !important;
+  background: #E05A1C !important;
+  border-color: #E05A1C !important;
+  box-shadow: 0 4px 16px rgba(243, 114, 44, 0.35) !important;
   transform: translateY(-1px);
 }
 
 .gvc-btn--complete:active {
   transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(56, 161, 105, 0.2) !important;
+  box-shadow: 0 2px 6px rgba(243, 114, 44, 0.2) !important;
 }
 
 .gvc-validation-msg {
@@ -1254,14 +1270,13 @@
 
 .gvc-guarantee__header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
   padding: 20px 20px 16px;
 }
 
 .gvc-guarantee__check {
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .gvc-guarantee__info {
@@ -1314,19 +1329,30 @@
 
 /* Guarantee image */
 .gvc-guarantee__img-wrap {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  max-width: 48px;
+  max-height: 48px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   background: var(--gvc-bg);
   border: 1px solid var(--gvc-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
 }
 
 .gvc-guarantee__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+  object-fit: contain;
+  display: block;
 }
 
 /* Guarantee description */
@@ -1902,11 +1928,11 @@ form.cart button[type="submit"].single_add_to_cart_button,
   font-weight: 600 !important;
   cursor: pointer !important;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-  border: 2px solid #8BA888 !important;
-  background: #8BA888 !important;
+  border: 2px solid #F3722C !important;
+  background: #F3722C !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
-  box-shadow: 0 4px 14px rgba(139, 168, 136, 0.3) !important;
+  box-shadow: 0 4px 14px rgba(243, 114, 44, 0.3) !important;
   text-transform: none !important;
   letter-spacing: 0.02em !important;
   min-height: 48px !important;
@@ -1920,9 +1946,9 @@ form.cart button[type="submit"].single_add_to_cart_button,
 form.cart .single_add_to_cart_button:hover,
 form.cart button[type="submit"].single_add_to_cart_button:hover,
 .woocommerce-variation-add-to-cart .button:hover {
-  background: #1E514D !important;
-  border-color: #1E514D !important;
-  box-shadow: 0 6px 20px rgba(30, 81, 77, 0.35) !important;
+  background: #E05A1C !important;
+  border-color: #E05A1C !important;
+  box-shadow: 0 6px 20px rgba(224, 90, 28, 0.35) !important;
   transform: translateY(-1px) !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
@@ -1932,7 +1958,7 @@ form.cart button[type="submit"].single_add_to_cart_button:hover,
 form.cart .single_add_to_cart_button:active,
 .woocommerce-variation-add-to-cart .button:active {
   transform: translateY(0) !important;
-  box-shadow: 0 2px 8px rgba(30, 81, 77, 0.2) !important;
+  box-shadow: 0 2px 8px rgba(224, 90, 28, 0.2) !important;
 }
 
 /* Disabled state */

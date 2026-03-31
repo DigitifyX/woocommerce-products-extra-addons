@@ -15,6 +15,7 @@ class Frontend {
         add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueue_scripts' ] );
         add_action( 'woocommerce_before_add_to_cart_button', [ __CLASS__, 'render_configurator_mount' ], 5 );
         add_filter( 'woocommerce_product_add_to_cart_text', [ __CLASS__, 'custom_button_text' ], 10, 2 );
+        add_filter( 'woocommerce_product_single_add_to_cart_text', [ __CLASS__, 'custom_single_button_text' ], 10, 2 );
     }
 
     /**
@@ -109,7 +110,20 @@ class Frontend {
         if ( is_product() && is_object( $product ) && method_exists( $product, 'get_id' ) ) {
             $groups = DB::resolve_groups_for_product( $product->get_id() );
             if ( ! empty( $groups ) ) {
-                return __( 'Configure & Add to Cart', 'gv-configurator' );
+                return __( 'Jetzt sicher bestellen ✓', 'gv-configurator' );
+            }
+        }
+        return $text;
+    }
+
+    /**
+     * Customize the add to cart button text on the single product page.
+     */
+    public static function custom_single_button_text( $text, $product ) {
+        if ( is_object( $product ) && method_exists( $product, 'get_id' ) ) {
+            $groups = DB::resolve_groups_for_product( $product->get_id() );
+            if ( ! empty( $groups ) ) {
+                return __( 'Jetzt sicher bestellen ✓', 'gv-configurator' );
             }
         }
         return $text;

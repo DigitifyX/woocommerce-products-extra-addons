@@ -8,7 +8,7 @@ import { useState, useCallback } from '@wordpress/element';
 import AddonItem from './AddonItem';
 import { t } from '../utils/i18n';
 
-const DESC_LIMIT = 70;
+const DESC_LIMIT = 150;
 
 export default function AddonGroup({
   group,

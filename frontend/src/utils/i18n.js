@@ -20,8 +20,8 @@ const translations = {
     no_options_selected: 'Noch keine Optionen ausgewählt',
     subtotal: 'Zwischensumme',
     vat: 'MwSt. ({rate}%)',
-    total: 'Gesamt',
-    total_label: 'Gesamt:',
+    total: 'Gesamtpreis',
+    total_label: 'Gesamtpreis:',
     incl_vat: 'Inkl. MwSt.',
     excl_vat: 'Exkl. MwSt.',
     required_options_missing: 'Erforderliche Optionen noch nicht ausgewählt',
@@ -59,7 +59,7 @@ const translations = {
     field_required: 'Dieses Feld ist erforderlich.',
 
     // Complete Configuration
-    complete_configuration: 'Konfiguration abschließen ✓',
+    complete_configuration: 'Gesamtpreis anzeigen →',
   },
 
   nl_NL: {
